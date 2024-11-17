@@ -1,5 +1,6 @@
 "use client";
 
+import PhotoGrid from "@/components/PhotoGrid";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -25,7 +26,9 @@ export default function Home() {
       <h1 className="text-4xl pt-10 pb-8 font-bold">COLLECTION</h1>
       <section className="text-neutral-700">
         <div className="container w-full">
-          <div className="flex flex-wrap w-full">{/* ... (photo grid) */}</div>
+          <div className="flex flex-wrap w-full">
+            <PhotoGrid />
+          </div>
         </div>
       </section>
     </div>
