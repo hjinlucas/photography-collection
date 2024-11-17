@@ -1,9 +1,34 @@
 // components/PhotoGrid.tsx
 "use client";
 
+import Image from "next/image";
 import { useEffect } from "react";
-import { photos } from "../data/photos";
-import PhotoItem from "./PhotoItem";
+import { photos, Photo } from "../data/photos";
+
+function PhotoItem({ photo }: { photo: Photo }) {
+  let sizeClass = "";
+  if (photo.orientation === "portrait") {
+    sizeClass = "w-1/2 md:w-1/4";
+  } else if (photo.orientation === "landscape") {
+    sizeClass = photo.size === "small" ? "w-1/2 md:w-1/4" : "w-full md:w-1/2";
+  }
+
+  return (
+    <div className={`p-1 ${sizeClass}`}>
+      <div className="overflow-hidden h-full w-full">
+        <a href={photo.src} data-fancybox="gallery">
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            width={1000}
+            height={1000}
+            className="block h-full w-full object-cover object-center opacity-0 animate-fade-in transition duration-500 transform scale-100 hover:scale-110"
+          />
+        </a>
+      </div>
+    </div>
+  );
+}
 
 export default function PhotoGrid() {
   useEffect(() => {
@@ -20,16 +45,9 @@ export default function PhotoGrid() {
 
   return (
     <div className="flex flex-wrap w-full">
-      <div className="flex w-full md:w-1/2 flex-wrap">
-        {photos.slice(0, 4).map((photo) => (
-          <PhotoItem key={photo.id} photo={photo} />
-        ))}
-      </div>
-      <div className="flex w-full md:w-1/2 flex-wrap">
-        {photos.slice(4, 8).map((photo) => (
-          <PhotoItem key={photo.id} photo={photo} />
-        ))}
-      </div>
+      {photos.map((photo) => (
+        <PhotoItem key={photo.id} photo={photo} />
+      ))}
     </div>
   );
 }

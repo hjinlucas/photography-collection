@@ -7,15 +7,22 @@ interface PhotoItemProps {
 }
 
 export default function PhotoItem({ photo }: PhotoItemProps) {
+  let sizeClass = "";
+  if (photo.orientation === "portrait") {
+    sizeClass = "w-1/2 md:w-1/4";
+  } else if (photo.orientation === "landscape") {
+    sizeClass = photo.size === "small" ? "w-1/2 md:w-1/4" : "w-full md:w-1/2";
+  }
+
   return (
-    <div className="w-full md:w-1/2 p-1">
+    <div className={`p-1 ${sizeClass}`}>
       <div className="overflow-hidden h-full w-full">
         <a href={photo.src} data-fancybox="gallery">
           <Image
             src={photo.src}
             alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
+            width={1000}
+            height={1000}
             className="block h-full w-full object-cover object-center opacity-0 animate-fade-in transition duration-500 transform scale-100 hover:scale-110"
           />
         </a>
